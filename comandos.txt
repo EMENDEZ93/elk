@@ -1,0 +1,8 @@
+sudo docker-compose run django python project/manage.py makemigrations
+sudo docker-compose run django python project/manage.py migrate
+sudo docker-compose up
+admin.py
+tests.py
+views.py
+sudo docker-compose run django python3 project/manage.py startapp apps ./project/app/
+sudo chmod -R 777 project/apps/
