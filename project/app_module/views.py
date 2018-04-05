@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.http import Http404
+from .models import Language
 
 
-# Create your views here.
-#def hello_view(request):
-#    musics = Music.objects.all()
-#    # raise Exception('error !!!!')
-#    # raise Http404("sorry 404")
-#    return render(request, 'hello_django.html', {
-#        'data': "Hello Django ",
-#        'musics': musics,
-#    })
+def error_view(request):
+    language = Language.objects.all()
+    # raise Exception('error !!!!')
+    # raise Http404("sorry 404")
+    return render(request, 'django.html', {
+        'data': "Hello Django ",
+        'languages': language,
+    })
