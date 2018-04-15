@@ -3,15 +3,23 @@ version: '3'
 services:
   db:
     image: postgres
+    networks:
+    - elk
   django:
     build: .
     command: python3 project/manage.py runserver 0.0.0.0:8000
+    restart: always
     volumes:
       - .:/code
     ports:
       - "8000:8000"
-    depends_on:
+    links:
       - db
+    logging:
+      driver: "syslog"
+      options:
+          syslog-address: tcp://0.0.0.0:5000
+          tag: django-container-tcp
 
   elasticsearch:
     build:
