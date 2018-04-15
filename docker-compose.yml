@@ -8,7 +8,6 @@ services:
   django:
     build: .
     command: python3 project/manage.py runserver 0.0.0.0:8000
-    restart: always
     volumes:
       - .:/code
     ports:
@@ -20,6 +19,8 @@ services:
       options:
           syslog-address: tcp://0.0.0.0:5000
           tag: django-container-tcp
+    networks:
+      - elk
 
   elasticsearch:
     build:
