@@ -2,3 +2,6 @@
 *.xml
 *.idea
 *.pyc
+.idea/*
+.idea*
+.pyc*
