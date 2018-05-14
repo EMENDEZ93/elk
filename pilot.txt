@@ -1,0 +1,40 @@
+# verificación servicio elasticsearch
+    curl -XGET localhost:9200
+
+
+# verificación de índex	
+    curl -XGET http://localhost:9200/classes
+    curl -XGET http://localhost:9200/classes?pretty
+
+
+#creación de index 
+    curl -XPUT http://localhost:9200/classes
+    # retorna 
+	{"acknowledged":true,"shards_acknowledged":true,"index":"classes"}
+
+    # eliminar index 
+        curl -XDELETE http://localhost:9200/classes
+    # retorna
+	{"acknowledged":true}
+
+
+#creación de document
+    curl -XPOST http://localhost:9200/classes/class/1/ -H 'Content-Type: application/json' -d @arquitectura.json
+
+    # consulta api elasticsearch
+    curl -XGET http://localhost:9200/classes/class/1/?pretty
+
+    # update
+    curl -XPOST http://localhost:9200/classes/class/1/_update?pretty -H 'Content-Type: application/json' -d '{"doc":{"unit":4}}'
+
+    ******* Punto Calificable ********
+    curl -XPOST http://localhost:9200/classes/class/2/ -H 'Content-Type: application/json' -d '{}'
+
+    #Cambiar valor de un campo
+
+
+
+
+
+# taller
+https://catalog.data.gov/dataset?q=population+by+country&sort=score+desc%2C+name+asc&as_sfid=AAAAAAWVB-wIqTsn-AbLS6ARZ9g-hzeDOoxOvFFPNPSX6WRBcMyl3iK6oYIDWJRtvfffOkl9yl-PsM8YxQsE9ag-57fFhTc2vrQbEKdSFDjiIn1VTD1u9MVYuKZqlIkZCPm9_3U%3D&as_fid=cdf10bbf07b35593e02aff9bdd2e08936a8775d6&ext_location=&ext_bbox=&ext_prev_extent=-142.03125%2C8.754794702435618%2C-59.0625%2C61.77312286453146
