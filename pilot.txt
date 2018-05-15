@@ -3,17 +3,16 @@
 
 
 # verificación de índex	
-    curl -XGET http://localhost:9200/classes
     curl -XGET http://localhost:9200/classes?pretty
 
 
 #creación de index 
-    curl -XPUT http://localhost:9200/classes
+    curl -XPUT http://localhost:9200/classes?pretty
     # retorna 
 	{"acknowledged":true,"shards_acknowledged":true,"index":"classes"}
 
     # eliminar index 
-        curl -XDELETE http://localhost:9200/classes
+        curl -XDELETE http://localhost:9200/classes?pretty
     # retorna
 	{"acknowledged":true}
 
@@ -27,14 +26,49 @@
     # update
     curl -XPOST http://localhost:9200/classes/class/1/_update?pretty -H 'Content-Type: application/json' -d '{"doc":{"unit":4}}'
 
+    # delete
+    curl -XDELETE http://localhost:9200/classes/class/2/?pretty
+
     ******* Punto Calificable ********
-    curl -XPOST http://localhost:9200/classes/class/2/ -H 'Content-Type: application/json' -d '{}'
+    # crear un documento
+    curl -XPOST http://localhost:9200/classes/class/2/?pretty -H 'Content-Type: application/json' -d '{}'
 
-    #Cambiar valor de un campo
-
-
-
+    #Cambiar valor del campo ING.SIST por ingeniería de sistemas
 
 
-# taller
-https://catalog.data.gov/dataset?q=population+by+country&sort=score+desc%2C+name+asc&as_sfid=AAAAAAWVB-wIqTsn-AbLS6ARZ9g-hzeDOoxOvFFPNPSX6WRBcMyl3iK6oYIDWJRtvfffOkl9yl-PsM8YxQsE9ag-57fFhTc2vrQbEKdSFDjiIn1VTD1u9MVYuKZqlIkZCPm9_3U%3D&as_fid=cdf10bbf07b35593e02aff9bdd2e08936a8775d6&ext_location=&ext_bbox=&ext_prev_extent=-142.03125%2C8.754794702435618%2C-59.0625%2C61.77312286453146
+
+# kibana classes e.g
+
+    # creación del index
+    curl -XPUT http://localhost:9200/classes?pretty
+
+    # verificación del index
+    curl -XGET http://localhost:9200/classes?pretty
+
+    # creación del mapping
+    curl -XPUT 'http://localhost:9200/classes/class/_mapping?pretty' -H 'Content-Type: application/json' -d @resource/tile_map/classesRating_mapping.json
+
+    # verificación del mapping
+    curl -XGET http://localhost:9200/classes/?pretty
+
+    # agregamos docs del classes.json
+    curl -XPOST http://localhost:9200/_bulk?pretty --data-binary @resource/tile_map/classes.json -H 'Content-Type: application/json'
+
+    # verificación de registros
+    curl -XGET http://localhost:9200/classes/class/1/?pretty
+
+    # ingresamos a kibana
+    http://localhost:5601
+
+    visualize
+        => create a visualization
+            => coordinate map
+                => classes
+                    => Geo Coordinates
+                        => select an aggregation - GeoHash
+                            => field - school_location
+
+
+# kibana dashboard
+
+
