@@ -69,6 +69,47 @@
                             => field - school_location
 
 
+# kibana basketball
+
+    # creacion de index basketball
+    curl -XPUT localhost:9200/basketball?pretty
+
+    # creacion de mapping
+    curl -XPUT 'localhost:9200/basketball/record/_mapping?pretty' -H 'Content-Type: application/json' -d @resource/basketball/basketball_mapping.json
+
+    # agregamos docs del bulk_baskerball.json
+    curl -XPOST 'localhost:9200/_bulk?pretty' --data-binary @resource/basketball/bulk_basketball.json -H 'Content-Type: application/json'
+
+    # ingresamos a kibana
+    http://localhost:5601
+
+    Management
+        => Index pattern - basketball > Next step
+            => Time Filter field name - submit_date > Create index pattern
+
+    Discover
+        => Quick
+            => Last 5 years
+        => Absolute
+            => From - 2016-10-01 00:00:00.000
+            => To - 2016-12-17 23:59:59.999
+
+    Visualize
+        => Create a visualization
+            => Vertical Bar
+                => basketball
+                    => Add metrics
+                        => Y-Axis
+                            => Aggregation - Average
+                            => Field - Point
+                            => Custom Label - Avg
+
+                        => X-Axis
+                            => Aggregation - Terms
+                            => Field - name
+        => Play
+
+
 # kibana dashboard
 
 
